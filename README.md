@@ -9,20 +9,20 @@
 <div id="user-content-toc">
   <ul align="center" style="list-style: none;">
     <summary>
-      Targeting burst & clustered activity in the online review industry - from data creation to dashboard
+      Targeting <ins>Burst & Clustered</ins> Activity In The <ins>Online Review Industry</ins> - From Data Creation To Dashboard
     </summary>
   </ul>
 </div>
 
 ---
 
-### Hi Reader!
+### Hi Reader╰(*°▽°*)╯!
 
 Welcome to my exploratory SQL project for the online review industry:)
 
 I'll cut right to the chase, but feel free to read the below:
 
-## Table Of Contents
+## 📃Table Of Contents
 
 > 1. **[My Why?](#my-why)**
 > 2. **[Executive Summary](#executive-summary)**
@@ -30,19 +30,19 @@ I'll cut right to the chase, but feel free to read the below:
 > 4. **[Cleaning The Data](#cleaning-the-data)**
 > 5. **[Querying For Fraud Detection/Creating The Fraud Flag](#querying-for-fraud-detectioncreating-the-fraud-flag)**
 > 6. **[Challenges And Improvements](#challenges-and-improvements)**
-> 7. **[Google DataStudio Dashboard](#google-datastudio-dashboard)**
+> 7. **[Google Data Studio Dashboard](#google-data-studio-dashboard)**
 
-## My Why?
+## ❓My Why?
 
 ### Personal Motivation
 I wanted to build this project to work more with big data. 
-With my background in tech fraud, I had experience dealing with fraud, often on a micro level. When I looked into roles with analytics, I was told my experience lacked big data experience. <ins>**So, I did it!**</ins>
+With my background in tech fraud, I had experience dealing with fraud, often on a micro level. When I looked into roles with analytics, I was told my experience lacked big data experience. <ins>**So... I did it!**</ins>
 Using my transferrable knowledge, I wanted to challenge myself to see what working in analytics could entail.
 
 ## Executive Summary
 
-### Project Motivation
-Review platforms like Trustpilot face a persistent challenge: **coordinated fake reviews**. These are **organized** campaigns where networks of fake accounts:
+### Business Motivation
+Review platforms like Trustpilot face a persistent challenge: <ins>**coordinated fake reviews**</ins>. These are **organized** campaigns where networks of fake accounts:
  
 - **Boost scam companies** with clusters of 5-star reviews.
 - **Attack competitors** with clusters of 1-star attacks.
@@ -53,10 +53,19 @@ The stakes were:
 - [Trustpilot was fined €4.6M](https://www.business-reporter.co.uk/news/latest-news/italy-fines-review-platform-trustpilot-46-million-for-misleading-consumers-shares-slip-14306) for failing to verify review authenticity.
 - [Scam operations abuse the platform systematically](https://www.theguardian.com/technology/2025/oct/17/fake-reviews-are-plaguing-crypto-and-investment-scam-websites), with operators creating fake identities across multiple businesses.
 
+### Project Approach
+The strategy for the project was to build a **complete SQL-based fraud detection system** using BigQuery and Data Studio, mimicking what I believe to be a real-world application of a workflow at Trustpilot.
+In essence, it would involve:
+> 1. Obtaining a dataset.
+> 2. Cleaning the necessary data.
+> 3. Query, analyze, and impose metrics for fraud detection.
+> 4. Create a flag rule.
+> 5. Create a dashboard with the findings.
+
 ## Generating The Data
 ## Cleaning The Data
 ## Querying For Fraud Detection/Creating The Fraud Flag
 ## Challenges And Improvements
-## Google DataStudio Dashboard
+## Google Data Studio Dashboard
 
 Feel free to connect with me:
