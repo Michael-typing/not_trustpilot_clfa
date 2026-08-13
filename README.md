@@ -58,9 +58,9 @@ The strategy for the project was to build a **complete SQL-based fraud detection
 In essence, it would involve:
 > 1. **Obtaining a dataset.**
 > 2. **Cleaning the necessary data.**
-> 3. **Query, analyze, and impose metrics for fraud detection.**
-> 4. **Create a flag rule.**
-> 5. **Create a dashboard with the findings.**
+> 3. **Querying, analysing, and imposing metrics for fraud detection.**
+> 4. **Creating a flag rule.**
+> 5. **Creating a dashboard with the findings.**
 
 ## Generating The Data
 
