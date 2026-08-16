@@ -1,11 +1,10 @@
 <div id="user-content-toc">
   <ul align="center" style="list-style: none;">
     <summary>
-      <h1>PROJECT: (NOT) TRUSTPILOT - CLFA<br>(CLUSTER FARM AND FAKE REVIEWS)</h1>
+      <h1>PROJECT: (NOT) TRUSTPILOT ❇️ - CLFA<br>(CLUSTER FARM AND FAKE REVIEWS)</h1>
     </summary>
   </ul>
-</div>
-
+</div>   
 <div id="user-content-toc">
   <ul align="center" style="list-style: none;">
     <summary>
@@ -18,9 +17,9 @@
 
 ### Hi Reader╰(*°▽°*)╯!
 
-Welcome to my exploratory SQL project for the online review industry:)
+Welcome to my **exploratory SQL project** for the **online review industry**:)
 
-I'll cut right to the chase, but feel free to read the below:
+I'll cut right to the chase:
 
 ## 📃Table Of Contents
 
@@ -35,8 +34,10 @@ I'll cut right to the chase, but feel free to read the below:
 ## ❓My Why?
 
 ### Personal Motivation
-I wanted to build this project to work more with big data. 
-With my background in tech fraud, I had experience dealing with fraud, often on a micro level. When I looked into roles with analytics, I was told my experience lacked big data experience. <ins>**So... I did it!**</ins>
+I wanted to build this project to work more with big data.  
+
+With my background in tech fraud, I had experience dealing with fraud, often on a micro level. When I looked into roles with analytics, I was told my experience lacked big data experience. <ins>**So... I DID IT!**</ins>  
+
 Using my transferrable knowledge, I wanted to challenge myself to see what working in analytics could entail.
 
 ## Executive Summary
@@ -64,39 +65,60 @@ In essence, it would involve:
 
 ## Generating The Data
 
-The dataset is generated using Tonic.ai to create a realistic, Trustpilot-like schema with multiple tables and intentional fraud patterns.
+One of my biggest goals for this project was to work with big data, but it quickly became my first obstacle.  
+> `CHALLENGE`: Find a suitable large dataset.  
+> `SOLUTION`: Create my own dataset.
+
+I generated my own synthetic dataset with the composition:
+
+| Segment | Segment Count |
+|---------|----------------|
+| **Review Count:** | ~ 2 M |
+| **User Count:** | ~ 300 K  |
+| **Business Count:** | 30 K |
+| **Device Count:** | ~ 1.8 M  |
+| **IP Address Count:** | ~ 1.8 M |
+
+aspects of the dataset
+table
+fraudulent injections
 
 Schema overview:
+```
+├── 🏢 businesses (PK: business_id)
+│   ├─ FKs: None
+│   └─ Fraud signals: is_paying_customer, is_high_risk_vertical, subscription_plan
+│
+├── 👥 users (PK: user_id)
+│   ├─ FKs: None
+│   └─ Ground truth: is_suspicious_user, email_domain consistency
+│
+├── ⭐ reviews (PK: review_id)
+│   ├─ FKs: business_id → businesses, user_id → users, invitation_id → review_invitations
+│   └─ Ground truth: is_fraudulent_review_gt, is_verified_labelled, contains_suspicious_phrases
+│
+├── 💌 review_invitations (PK: invitation_id)
+│   ├─ FKs: business_id → businesses, user_id → users
+│   └─ Fraud signals: selection_type, was_transaction_real
+│
+├── 📡 technical_signals (PK: technical_id)
+│   ├─ FKs: review_id → reviews, user_id → users
+│   └─ Fraud signals: ip_risk_score, device_risk_score, is_vpn_suspected
+│
+├── 🚩 flags (PK: flag_id)
+│   ├─ FKs: review_id → reviews
+│   └─ Insight: removal_rate, flag_reason patterns
+│
+├── 📈 business_risk_snapshots (Composite PK: snapshot_date, business_id)
+│   ├─ FKs: business_id → businesses
+│   └─ Aggregates: flag_rate, removal_rate, business_risk_score
+│
+└── 📊 user_activity_summary (PK: user_id)
+    ├─ FKs: user_id → users
+    └─ Aggregates: lifetime_review_count, suspicious_review_share
+```
 
-businesses – company profiles, subscription status, industry, risk flags.
 
-users – reviewer accounts, with is_suspicious_user ground truth.
-
-review_invitations – invitations sent to customers, with selection_type and was_transaction_real.
-
-reviews – individual reviews with source, is_verified_labelled, status, and is_fraudulent_review_gt.
-
-technical_signals – IP, device, VPN flags, and risk scores per review.
-
-flags – moderation reports and outcomes.
-
-Fraud seeding rules:
-
-5–8% suspicious users (is_suspicious_user = TRUE).
-
-3–5% high-risk businesses (is_high_risk_business = TRUE).
-
-10–15% fraudulent reviews (is_fraudulent_review_gt = TRUE).
-
-Controlled fraud patterns:
-
-Review farms: users sharing IPs/devices, posting many 5-star reviews in bursts.
-
-Fake negative attacks: coordinated 1-star reviews on competitor businesses.
-
-Biased invitations: high share of handpicked positive invites leading to “verified” reviews.
-
-Answer-key consistency: all fraud labels align across tables for evaluation.
 
 ## Cleaning The Data
 ## Querying For Fraud Detection/Creating The Fraud Flag
