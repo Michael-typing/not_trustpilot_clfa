@@ -75,7 +75,7 @@ not-trustpilot-clfa/
 │   └── Initial_Project_Data_From_Perplexity_AI    (Schema spec, fraud patterns)
 │
 ├── 📂 02-Data-Generation/
-│   └── [Tonic.ai synthetic data]                   (8 tables, ~5M rows)
+│   └── [Generated synthetic data]                   (8 tables, ~5M rows)
 │
 ├── 📂 03-Data-Cleaning/
 │   ├── Find-Dirty-Data-Operation.sql               (Identify format issues)
@@ -83,14 +83,11 @@ not-trustpilot-clfa/
 │
 ├── 📂 04-Fraud-Detection/
 │   ├── 2-Fake-Review-Clusters_Farm-Operation.sql   (Baseline detection, 30-day rolling)
-│   ├── Reassessed_clfa_query_2.sql                 (Advanced detection w/ validation)
-│   └── Final_BigQuery_Code                         (Precision/recall metrics)
+│   └── Reassessed_clfa_query_2.sql                 (Advanced detection w/ validation)
 │
-├── 📂 05-Visualization/
-│   └── [Google Data Studio Dashboard]              (Executive summary + drill-downs)
-│
-└── 📂 06-SQL-Utilities/
-    └── [Helper queries]                            (Ad-hoc analysis, exploration)
+└── 📂 05-Visualization/
+    └── [Google Data Studio Dashboard]              (Executive summary + drill-downs)
+
 ```
 
 ## Generating The Data
@@ -229,12 +226,91 @@ Schema overview:
     └─         suspicious_review_share ------ (*FRAUD SIGNAL*)
 ```
 
-
-
 ## Cleaning The Data
+
+### 🔎 Identify: Finding Dirty Data
+
+I created a comprehensive scanning query (`Find-Dirty-Data-Operation.sql`) that:
+
+✨ Scans all 8 tables for format inconsistencies  
+✨ Reports **13 types of dirty data issues** across 6 tables  
+✨ Categorizes by severity: missing, blank, extra spaces, improper casing  
+✨ Counts affected rows per column per table  
+
+**Results:**
+```
+BUSINESSES_TABLE           
+├─ BUSINESS NAME - Extra Spaces        1,148 rows
+├─ BUSINESS NAME - Improper Casing     1,655 rows
+├─ CITY - Extra Spaces                 1,220 rows
+└─ CITY - Improper Casing              808 rows
+
+USERS_TABLE                
+├─ EMAIL - Extra Spaces                5,993 rows
+├─ EMAIL - Improper Casing             5,996 rows
+├─ PREFERRED LANGUAGE - Extra Spaces   5,979 rows
+└─ PREFERRED LANGUAGE - Improper Case  6,037 rows
+
+REVIEWS_TABLE              
+├─ LANGUAGE - Extra Spaces            37,387 rows
+└─ LANGUAGE - Improper Casing         37,612 rows
+
+REVIEW_INVITATIONS_TABLE   
+├─ CURRENCY - Extra Spaces             8,225 rows
+├─ CURRENCY - Improper Casing          8,076 rows
+└─ CURRENCY - Missing                 145,356 rows (expected; some reviews not monetized)
+
+TECHNICAL_SIGNALS_TABLE    
+└─ USER_AGENT - Extra Spaces          51,599 rows
+```
+
+### 🧽 Clean: Fixing Inconsistencies
+
+Applied targeted fixes in `Clean-Data-Operation.sql`.
+
+### ✅ Validate: Re-Scanning After Fixes
+
+Post-cleaning validation confirmed **100% fix rate** on identified dirty data.
+
 ## Querying For Fraud Detection/Creating The Fraud Flag
+
+### 🎬 Query Execution Flow
+
+```
+Step 1: CREATE BASE CTE
+  └─ JOIN reviews + technical_signals + users
+  └─ All rows with fraud metadata
+
+Step 2: AGGREGATION LAYER (Device & IP level)
+  ├─ COUNT DISTINCT users per device (all-time)
+  ├─ COUNT DISTINCT users per IP (all-time)
+  └─ These are referenced in final CASE statements
+
+Step 3: ROLLING METRICS LAYER (30-day windows)
+  ├─ user_rolling_reviews_30d
+  ├─ user_rolling_distinct_ip_address_30d
+  ├─ user_rolling_distinct_device_id_30d
+  ├─ user_rolling_distinct_businesses_30d
+  ├─ user_rolling_avg_rating_30d
+  ├─ user_rolling_extreme_rating_30d
+  └─ user_rolling_extreme_rating_pos_neg_indicator
+
+Step 4: FLAGGING LAYER
+  ├─ risky_clfa_behaviour (short-term rolling)
+  └─ risky_clfa_user (long-term infrastructure)
+
+Step 5: VALIDATION LAYER
+  ├─ Compare flagged units to is_suspicious_user (ground truth)
+  ├─ Calculate precision/recall by metric (user, device, IP)
+  └─ Output: clfa_query_risky_results, matched_clfa_risky_count, proportions
+```
+
 ## Challenges And Improvements
+
+
 ## Google Data Studio Dashboard
+
+### 📈 Executive Summary Dashboard
 
 ## Feel free to connect with me🤝:
  
