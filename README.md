@@ -36,9 +36,9 @@ I'll cut right to the chase:
 ### Personal Motivation
 I wanted to build this project to work more with big data.  
 
-With my background in tech fraud, I had experience dealing with fraud, often on a micro level. When I looked into roles with analytics, I was told my experience lacked big data experience. <ins>**So... I DID IT!**</ins>  
+With my background in tech fraud, I had experience dealing with fraud, often on a micro level. When I looked into analytics roles, I was told my experience lacked big data experience. <ins>**So... I CHALLENGED MYSELF!**</ins>  
 
-Using my transferrable knowledge, I wanted to challenge myself to see what working in analytics could entail.
+Using my transferrable knowledge, I wanted to see what working in macro analytics could entail.
 
 ## Executive Summary
 
@@ -69,24 +69,24 @@ In essence, it would involve:
 
 ```
 not-trustpilot-clfa/
-├── 📄 README.md                                    (You are here!)
+├── 📄 README.md                                    *(You are here!)*
 │
 ├── 📂 01-Project-Brief/
-│   └── Initial_Project_Data_From_Perplexity_AI    (Schema spec, fraud patterns)
+│   └── Initial_Project_Data_From_Perplexity_AI     (Schema, fraud injection planning)
 │
 ├── 📂 02-Data-Generation/
-│   └── [Generated synthetic data]                   (8 tables, ~5M rows)
+│   └── [Generated synthetic data]                  (8 tables)
 │
 ├── 📂 03-Data-Cleaning/
 │   ├── Find-Dirty-Data-Operation.sql               (Identify format issues)
-│   └── Clean-Data-Operation.sql                    (Fix casing, spacing, encoding)
+│   └── Clean-Data-Operation.sql                    (Fix casing, spacing, etc.)
 │
 ├── 📂 04-Fraud-Detection/
-│   ├── 2-Fake-Review-Clusters_Farm-Operation.sql   (Baseline detection, 30-day rolling)
-│   └── Reassessed_clfa_query_2.sql                 (Advanced detection w/ validation)
+│   ├── 2-Fake-Review-Clusters_Farm-Operation.sql   (Baseline detection)
+│   └── Reassessed_clfa_query_2.sql                 (Reassessment from baseline detection, advanced detection w/ validation)
 │
 └── 📂 05-Visualization/
-    └── [Google Data Studio Dashboard]              (Executive summary + drill-downs)
+    └── [Google Data Studio Dashboard]              (Project analytics overview)
 
 ```
 
@@ -232,36 +232,40 @@ Schema overview:
 
 I created a comprehensive scanning query (`Find-Dirty-Data-Operation.sql`) that:
 
-✨ Scans all 8 tables for format inconsistencies  
-✨ Reports **13 types of dirty data issues** across 6 tables  
-✨ Categorizes by severity: missing, blank, extra spaces, improper casing  
-✨ Counts affected rows per column per table  
+✨ Scanned appropriate tables for format inconsistencies.  
+✨ Categorized formatting by group: missing, blank, extra spaces, improper casing. 
+✨ Counts affected rows per column per table.
 
 **Results:**
 ```
 BUSINESSES_TABLE           
-├─ BUSINESS NAME - Extra Spaces        1,148 rows
-├─ BUSINESS NAME - Improper Casing     1,655 rows
-├─ CITY - Extra Spaces                 1,220 rows
-└─ CITY - Improper Casing              808 rows
+├─ BUSINESS NAME - Extra Spaces        1,148 
+├─ BUSINESS NAME - Improper Casing     1,655 
+├─ CITY - Extra Spaces                 1,220 
+├─ CITY - Improper Casing              808 
+└─ BUSINESSES TABLE - Other            30,000
 
 USERS_TABLE                
-├─ EMAIL - Extra Spaces                5,993 rows
-├─ EMAIL - Improper Casing             5,996 rows
-├─ PREFERRED LANGUAGE - Extra Spaces   5,979 rows
-└─ PREFERRED LANGUAGE - Improper Case  6,037 rows
+├─ EMAIL - Extra Spaces                5,993 
+├─ EMAIL - Improper Casing             5,996 
+├─ PREFERRED LANGUAGE - Extra Spaces   5,979 
+├─ PREFERRED LANGUAGE - Improper Case  6,037 
+└─ USERS TABLE - Other                 300,000 
 
 REVIEWS_TABLE              
-├─ LANGUAGE - Extra Spaces            37,387 rows
-└─ LANGUAGE - Improper Casing         37,612 rows
+├─ LANGUAGE - Extra Spaces            37,387 
+├─ LANGUAGE - Improper Casing         37,612 
+└─ REVIEWS TABLE - Other              291,066
 
 REVIEW_INVITATIONS_TABLE   
-├─ CURRENCY - Extra Spaces             8,225 rows
-├─ CURRENCY - Improper Casing          8,076 rows
-└─ CURRENCY - Missing                 145,356 rows (expected; some reviews not monetized)
+├─ CURRENCY - Extra Spaces             8,225 
+├─ CURRENCY - Improper Casing          8,076 
+├─ CURRENCY - Missing                  145,356 (expected; some reviews not monetized)
+└─ REVIEW INVITATIONS TABLE - OTHER    251,316
 
 TECHNICAL_SIGNALS_TABLE    
-└─ USER_AGENT - Extra Spaces          51,599 rows
+├─ USER_AGENT - Extra Spaces          51,599 
+└─ TECHNICAL SIGNALS TABLE - OTHER    290,875
 ```
 
 ### 🧽 Clean: Fixing Inconsistencies
@@ -270,7 +274,16 @@ Applied targeted fixes in `Clean-Data-Operation.sql`.
 
 ### ✅ Validate: Re-Scanning After Fixes
 
-Post-cleaning validation confirmed **100% fix rate** on identified dirty data.
+Post-cleaning validation confirmed the following:
+| Source Table | Cleaning Concern | "Dirty" Data Count |
+|---------|----------------|-----------|
+| **Businesses_table** | BUSINESS NAME | 0 |
+| **Businesses_table** | BUSINESS CITY | 0 |
+| **Review_invitations_table** | REVIEW CURRENCY | 0 |
+| **Reviews_table** | REVIEW LANGUAGE | 0 |
+| **Technical_signals_table** | USER AGENT | 0 |
+| **Users_table** | USER EMAIL | 0 |
+| **Users_table** | USERS PREFERRED LANGUAGE | 0 |
 
 ## Querying For Fraud Detection/Creating The Fraud Flag
 
