@@ -184,7 +184,7 @@ WITH
     WHERE ip_address
     GROUP BY ip_address),
 
--- 1.4: Suspicious Behaviour Metrics - Rolling Non-Distinct (BASE FOR NEW TABLE)
+-- 1.4: Suspicious Behaviour Metrics - Rolling Non-Distinct (BASE FOR NEXT TABLE)
   clfa_rolling_non_distinct_cte AS( 
     SELECT
       *,
