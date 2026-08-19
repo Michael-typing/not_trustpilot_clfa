@@ -28,7 +28,7 @@ I'll cut right to the chase:
 > 3. **[Generating The Data](#generating-the-data)**
 > 4. **[Cleaning The Data](#cleaning-the-data)**
 > 5. **[Querying For Fraud Detection/Creating The Fraud Flag](#querying-for-fraud-detectioncreating-the-fraud-flag)**
-> 6. **[Challenges And Improvements](#challenges-and-improvements)**
+> 6. **[Notes For Future](#notes-for-future)**
 > 7. **[Google Data Studio Dashboard](#google-data-studio-dashboard)**
 
 ## ❓My Why?
@@ -315,17 +315,35 @@ STEP 5: Create Base Table With Flagged User Metadata
   └─ JOIN a basic table with risky_clfa_behaviour (short-term rolling layer) metadata.
 
 STEP 6: Create "Answer Key"/Ground-Truth Layer
-  └─ 
+  └─ Use table in STEP 1 and filter WHERE "true" fraudulent conditions are met.
+
+STEP 7: Create Final Validation Layer Between Query And "Truth"
+  └─ Create table comparing the TRUE risky behaviours in STEP 5 versus STEP 6 "answer key"/ground-truth.
 ```
 
-## Challenges And Improvements
+## Notes For Future
+I faced quite a few challenges along the way, especially working with a dataset that I only made with some minor tweaks.  
 
+Very briefly, I'd like to take note of some things I would like to keep in mind for future projects:  
+
+✍ Generating more project specific dataset, which can help query and find a more "exciting" solution (in practice... more fraud = bad).  
+✍ Scheming a more standardized approach to terms and contexts of the project (i.e. switching between "Answer Key" and "Ground-Truth").  
+✍ Getting better insight of the dataset before querying (working on the [Google Data Studio Dashboard](https://datastudio.google.com/reporting/d207fa61-2817-4e57-849f-1c93f6bae343) helped me understand the data vastly).  
+✍ Planning what I would like to segment in each platform (BigQuery, Data Studio, Canva).  
+✍ ... And more.
 
 ## Google Data Studio Dashboard
 
-### 📈 Executive Summary Dashboard
+Please check out my visual dashboard with this projects data in my [Google Data Studio Dashboard](https://datastudio.google.com/reporting/d207fa61-2817-4e57-849f-1c93f6bae343)!
 
 ## Feel free to connect with me🤝:
  
-💼 **LinkedIn:** [LinkedIn]()
-🐙 **GitHub:** [@Michael-typing](https://github.com/your-username)  
+💼 **LinkedIn:** [Link With Me Here!](www.linkedin.com/in/michael-k-154b6217a)
+
+<div id="user-content-toc">
+  <ul align="center" style="list-style: none;">
+    <summary>
+      <h2>Thank you for checking out my project!</h2>
+    </summary>
+  </ul>
+</div>   
