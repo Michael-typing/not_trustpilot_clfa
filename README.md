@@ -103,10 +103,10 @@ I generated my own **synthetic dataset** resulting in the following composition:
 |---------|----------------|
 | **Review Count:** | ~ 2 M |
 | **User Count:** | ~ 300 K  |
-| **Business Count:** | 30 K |
+| **Business Count:** |   30 K |
 | **Device Count:** | ~ 1.8 M  |
 | **IP Address Count:** | ~ 1.8 M |
-| **Relational Tables:** | ~ 8 |
+| **Relational Tables:** |   8 |
 
 Schema overview:
 ```
