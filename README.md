@@ -108,7 +108,7 @@ I generated my own **synthetic dataset** resulting in the following composition:
 | **IP Address Count:** | ~ 1.8 M |
 | **Relational Tables:** |   8 |
 
-Schema overview:
+### 💻 Schema overview:
 ```
 ├── 🏢 businesses
 │   ├─ PK: business_id
