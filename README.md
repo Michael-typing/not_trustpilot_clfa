@@ -290,31 +290,32 @@ The post-cleaning check confirmed the following:
 ### 🎬 Query Execution Flow
 
 ```
+--- QUERY 1
 STEP 1: Create Base CTE
   └─ JOIN reviews + technical_signals + users ON review_id.
   └─ Include all rows with necessary fraud metadata.
 
-STEP 2: Create Channel-Level Bases (Device & IP level)
+--- QUERY 2
+STEP 2: Create Channel-Level Base CTE's (Device & IP level)
   ├─ COUNT DISTINCT users per device (all-time).
   └─ COUNT DISTINCT users per IP (all-time).
 
-STEP 3: 30-Day Rolling Window Layer
-  ├─ user_rolling_reviews_30d
-  ├─ user_rolling_distinct_ip_address_30d
-  ├─ user_rolling_distinct_device_id_30d
-  ├─ user_rolling_distinct_businesses_30d
-  ├─ user_rolling_avg_rating_30d
-  ├─ user_rolling_extreme_rating_30d
-  └─ user_rolling_extreme_rating_pos_neg_indicator
+STEP 3: 30-Day Rolling Window Layer CTE
+  ├─ Query rolling *non-distinct* layer -- using window functions for rolling aspect. 
+  └─ Query rolling *distinct* layer -- using self-join for rolling aspect. 
 
-Step 4: FLAGGING LAYER
-  ├─ risky_clfa_behaviour (short-term rolling)
-  └─ risky_clfa_user (long-term infrastructure)
+STEP 4: Flag Layer
+  ├─ risky_clfa_behaviour (risky rolling layer capture)
+  │   └─ focuses on setting a few conditions that would be triggered within STEP 3's rolling window layer.
+  └─ risky_clfa_user (risky all-time layer capture)
+      └─ focuses on setting a few conditions that would be triggered within STEP 2's all-time layer per channel.
 
-Step 5: VALIDATION LAYER
-  ├─ Compare flagged units to is_suspicious_user (ground truth)
-  ├─ Calculate precision/recall by metric (user, device, IP)
-  └─ Output: clfa_query_risky_results, matched_clfa_risky_count, proportions
+--- QUERY 3
+STEP 5: Create Base Table With Flagged User Metadata
+  └─ JOIN a basic table with risky_clfa_behaviour (short-term rolling layer) metadata.
+
+STEP 6: Create "Answer Key"/Ground-Truth Layer
+  └─ 
 ```
 
 ## Challenges And Improvements
