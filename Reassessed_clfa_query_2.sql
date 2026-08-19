@@ -136,7 +136,7 @@ QUERY 3: "Answers" And Results
 EXECUTION: 
 */
 -- QUERY 1 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--- 1.1: Base CTE (Clusterfarm base table 1 = clfa_base_1) 
+-- 1.1: Base Table (Clusterfarm base table 1 = clfa_base_1) 
 CREATE TABLE `Fraud_detection_1.clfa_base_cte_1` AS(
   SELECT
     r.user_id,
