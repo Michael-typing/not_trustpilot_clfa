@@ -270,11 +270,11 @@ TECHNICAL_SIGNALS_TABLE
 
 ### 🧽 Clean: Fixing Inconsistencies
 
-Applied targeted fixes in `Clean-Data-Operation.sql`.
+I applied targeted fixes in `Clean-Data-Operation.sql`.
 
 ### ✅ Validate: Re-Scanning After Fixes
 
-Post-cleaning validation confirmed the following:
+The post-cleaning check confirmed the following:
 | Source Table | Cleaning Concern | "Dirty" Data Count |
 |---------|----------------|-----------|
 | **Businesses_table** | BUSINESS NAME | 0 |
@@ -290,16 +290,15 @@ Post-cleaning validation confirmed the following:
 ### 🎬 Query Execution Flow
 
 ```
-Step 1: CREATE BASE CTE
-  └─ JOIN reviews + technical_signals + users
-  └─ All rows with fraud metadata
+STEP 1: Create Base CTE
+  └─ JOIN reviews + technical_signals + users ON review_id.
+  └─ Include all rows with necessary fraud metadata.
 
-Step 2: AGGREGATION LAYER (Device & IP level)
-  ├─ COUNT DISTINCT users per device (all-time)
-  ├─ COUNT DISTINCT users per IP (all-time)
-  └─ These are referenced in final CASE statements
+STEP 2: Create Channel-Level Bases (Device & IP level)
+  ├─ COUNT DISTINCT users per device (all-time).
+  └─ COUNT DISTINCT users per IP (all-time).
 
-Step 3: ROLLING METRICS LAYER (30-day windows)
+STEP 3: 30-Day Rolling Window Layer
   ├─ user_rolling_reviews_30d
   ├─ user_rolling_distinct_ip_address_30d
   ├─ user_rolling_distinct_device_id_30d
