@@ -17,7 +17,7 @@
 
 ### Hi Reader╰(*°▽°*)╯!
 
-Welcome to my **exploratory SQL project** for the **online review industry**:)
+Welcome to my **exploratory SQL project** for the **online review industry** :)
 
 I'll cut right to the chase:
 
@@ -38,7 +38,10 @@ I wanted to build this project to work more with **big data**.
 
 With my background in tech fraud, I had experience dealing with fraud, often on a micro level. When I looked into analytics roles, I was told my experience lacked big data experience. <ins>**So... I CHALLENGED MYSELF!**</ins>  
 
-Using my transferrable knowledge, I wanted to see what working in macro analytics could entail.
+Using my transferrable knowledge, I wanted to see what working in macro analytics could entail.  
+
+
+   
 
 ## 📑 Executive Summary 📑
 
@@ -53,8 +56,8 @@ The stakes were:
 Review platforms like *Trustpilot* face a persistent challenge; <ins>**coordinated fake reviews**</ins>. 
 These are **organized** campaigns where networks of fake accounts:
  
-- ↗**Boost scam companies** with clusters of 5-star reviews.
-- 🔻**Attack competitors** with clusters of 1-star attacks.
+- 📈**Boost scam companies** with clusters of 5-star reviews.
+- 📉**Attack competitors** with clusters of 1-star attacks.
 
 ### 📑 Project Approach
 The strategy for the project was to build a **complete SQL-based fraud detection system** using <ins>BigQuery</ins> and <ins>Data Studio</ins>, mimicking what I believe to be a real-world application of a fraud detection workflow at *Trustpilot*.  
@@ -70,9 +73,9 @@ In essence, it would involve:
 
 ```
 not-trustpilot-clfa/
-├── 📄 README.md                                    *(You are here!)*
+├── 📄 README.md                                    📍*(You are here!)*
 │
-├── ⌨1️⃣ - Project-Brief
+├── 🤖1️⃣ - Project-Brief
 │   └── Initial_Project_Data_From_Perplexity_AI     (Schema, fraud injection planning)
 │
 ├── 📂2️⃣ - Data-Generation
@@ -239,6 +242,9 @@ I created a comprehensive scanning query (`Find-Dirty-Data-Operation.sql`) that:
 
 **Results:**
 ```
+TABLE                                  DIRTY DATA COUNT
+-----                                  ----------------                        
+
 🏢 BUSINESSES_TABLE           
 ├─ BUSINESS NAME - Extra Spaces        1,148 
 ├─ BUSINESS NAME - Improper Casing     1,655 
@@ -254,9 +260,9 @@ I created a comprehensive scanning query (`Find-Dirty-Data-Operation.sql`) that:
 └─ USERS TABLE - Other                 300,000 
 
 ⭐ REVIEWS_TABLE              
-├─ LANGUAGE - Extra Spaces            37,387 
-├─ LANGUAGE - Improper Casing         37,612 
-└─ REVIEWS TABLE - Other              291,066
+├─ LANGUAGE - Extra Spaces             37,387 
+├─ LANGUAGE - Improper Casing          37,612 
+└─ REVIEWS TABLE - Other               291,066
 
 💌 REVIEW_INVITATIONS_TABLE   
 ├─ CURRENCY - Extra Spaces             8,225 
@@ -265,8 +271,8 @@ I created a comprehensive scanning query (`Find-Dirty-Data-Operation.sql`) that:
 └─ REVIEW INVITATIONS TABLE - OTHER    251,316
 
 📡 TECHNICAL_SIGNALS_TABLE    
-├─ USER_AGENT - Extra Spaces          51,599 
-└─ TECHNICAL SIGNALS TABLE - OTHER    290,875
+├─ USER_AGENT - Extra Spaces           51,599 
+└─ TECHNICAL SIGNALS TABLE - OTHER     290,875
 ```
 
 ### 🧽 Clean: Fixing Inconsistencies ❌
@@ -296,6 +302,7 @@ STEP 1️⃣: Create Base CTE
   └─ JOIN reviews + technical_signals + users ON review_id.
   └─ Include all rows with necessary fraud metadata.
 
+
 --- QUERY 2 --------------------------------------------------------------------------------------------------------
 STEP 2️⃣: Create Channel-Level Base CTE's (Device & IP level)
   ├─ COUNT DISTINCT users per device (all-time).
@@ -310,6 +317,7 @@ STEP 4️⃣: Flag Layer
   │   └─ focuses on setting a few conditions that would be triggered within STEP 3's rolling window layer.
   └─ risky_clfa_user (risky all-time layer capture)
       └─ focuses on setting a few conditions that would be triggered within STEP 2's all-time layer per channel.
+
 
 --- QUERY 3 --------------------------------------------------------------------------------------------------------
 STEP 5️⃣: Create Base Table With Flagged User Metadata
