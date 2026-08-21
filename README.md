@@ -1,7 +1,7 @@
 <div id="user-content-toc">
   <ul align="center" style="list-style: none;">
     <summary>
-      <h1>PROJECT: ❌❇️(NOT) TRUSTPILOT❇️❌ - CLFA<br>(CLUSTER FARM AND FAKE REVIEWS)</h1>
+      <h1>PROJECT: ❌❇️ (NOT) TRUSTPILOT ❇️❌ - CLFA<br>(CLUSTER FARM AND FAKE REVIEWS)</h1>
     </summary>
   </ul>
 </div>   
