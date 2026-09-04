@@ -49,7 +49,6 @@ Using my transferrable knowledge, I wanted to see what working in macro analytic
 When looking for project inspiration, I took some help from recent *Trustpilot* articles to design my data.
 
 The stakes were: 
-- [Trustpilot was fined €4.6M](https://www.business-reporter.co.uk/news/latest-news/italy-fines-review-platform-trustpilot-46-million-for-misleading-consumers-shares-slip-14306) for failing to verify review authenticity.
 - [Scam operations abuse the platform systematically](https://www.theguardian.com/technology/2025/oct/17/fake-reviews-are-plaguing-crypto-and-investment-scam-websites), with operators creating fake identities across multiple businesses.
 
 ### 📑 Topic: Fake Review Rings 👹
